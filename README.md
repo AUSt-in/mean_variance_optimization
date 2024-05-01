@@ -1,15 +1,14 @@
 ## Portfolio Optimization
 
 This Python project implements portfolio optimization techniques to maximize the Sharpe ratio and minimize volatility using historical stock price data.
-```markdown
-### Cloning the Repository
 
+### Cloning the Repository
 To clone the repository and navigate into the project directory, use the following commands:
 
 ```bash
 git clone https://github.com/YourUsername/portfolio-optimization.git
 cd portfolio-optimization
-
+```
 ## Installation of Dependencies
 
 Before running the project, install the required Python libraries:
