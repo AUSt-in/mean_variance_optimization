@@ -6,7 +6,7 @@ This Python project implements portfolio optimization techniques to maximize the
 To clone the repository and navigate into the project directory, use the following commands:
 
 ```bash
-git clone https://github.com/YourUsername/portfolio-optimization.git
+git clone https://github.com/AUSt-in/portfolio-optimization.git
 cd portfolio-optimization
 ```
 ## Installation of Dependencies
@@ -46,10 +46,3 @@ Contributions to this project are welcome. Please fork the repository and submit
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-### Notes:
-- Replace `https://github.com/YourUsername/portfolio-optimization.git` with the actual URL of your GitHub repository.
-- Modify any commands or file paths as necessary to align with your project's structure and naming conventions.
-- If there are specific requirements or configurations needed for the data file format or the environment, be sure to include those details in the README.
-- Ensure that you have a `requirements.txt` file in your project directory that lists all dependencies needed to run the project.
-
-This README provides a comprehensive guide for users to set up, use, and contribute to your portfolio optimization project.
