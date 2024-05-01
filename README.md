@@ -7,7 +7,7 @@ To clone the repository and navigate into the project directory, use the followi
 
 ```bash
 git clone https://github.com/AUSt-in/mean_variance_optimization.git
-cd portfolio-optimization
+cd mean_variance_optimization
 ```
 ## Installation of Dependencies
 
