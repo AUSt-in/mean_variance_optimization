@@ -49,17 +49,14 @@ def minimize_volatility(mean_returns, cov_matrix):
     return minimize_function(target_function, mean_returns, cov_matrix, bounds, constraints)
 
 # Load actual data
-data_path = 'path_to_your_data.csv'  # Modify this with the actual path to your dataset
+data_path = 'data/sp500_1990_2000.csv.csv'
 data = pd.read_csv(data_path)
 data['DATE'] = pd.to_datetime(data['DATE'], format='%m/%d/%Y')
 
-# Assume all other columns except 'DATE' are stock prices
 stock_data = data.drop(columns=['DATE'])
 
-# Calculate mean returns and covariance matrix
 mean_returns, cov_matrix = calculate_returns(stock_data)
 
-# Optimize portfolio
 optimal_weights_sharpe = maximize_sharpe(mean_returns, cov_matrix)
 optimal_weights_vol = minimize_volatility(mean_returns, cov_matrix)
 
