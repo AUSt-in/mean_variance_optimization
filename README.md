@@ -1,4 +1,3 @@
-Absolutely! Here's a structured README file for your Python-based portfolio optimization project, using the code and concepts we've discussed previously. You can use this as a template to guide users on how to set up and run the project.
 
 ```markdown
 # Portfolio Optimization
