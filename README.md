@@ -30,7 +30,7 @@ First, ensure that your stock price data is in a CSV file with columns for each 
 To perform portfolio optimization, run the `portfolio.py` script:
 
 ```bash
-python portfolio.py
+python asset_optimization_file.py
 ```
 
 The script will read historical price data, compute daily returns, calculate mean returns and the covariance matrix of returns, and then find the optimal weights for the portfolio to either maximize the Sharpe ratio or minimize volatility.
