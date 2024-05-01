@@ -6,7 +6,7 @@ This Python project implements portfolio optimization techniques to maximize the
 To clone the repository and navigate into the project directory, use the following commands:
 
 ```bash
-git clone https://github.com/AUSt-in/portfolio-optimization.git
+git clone https://github.com/AUSt-in/mean_variance_optimization.git
 cd portfolio-optimization
 ```
 ## Installation of Dependencies
