@@ -1,65 +1,54 @@
-import random
 import numpy as np
 import pandas as pd
-from scipy.optimize import minimize
+from scipy import optimize
 
 def seed_everything(seed=42):
-    random.seed(seed)
+    np.random.seed(seed)
     np.random.seed(seed)
 
 def random_weights(num_assets):
-    """Generate random weights for portfolio assets that sum to 1."""
     weights = np.random.rand(num_assets)
-    return weights / np.sum(weights)
+    return weights / sum(weights)
 
-def calculate_returns(data, annual_days=252):
-    """Calculate annualized mean returns and covariance matrix."""
-    daily_returns = data.pct_change().dropna()
-    mean_returns = daily_returns.mean() * annual_days
-    cov_matrix = daily_returns.cov() * annual_days
-    return mean_returns, cov_matrix
+def stock_returns(data, log_returns=False, annual_days=252):
+    if log_returns:
+        returns = data.pct_change().apply(lambda x: np.log(1+x))
+    else:
+        returns = data.pct_change()
+    returns = returns.dropna()
+    return returns.mean() * annual_days, returns.cov() * annual_days
 
-def portfolio_stats(weights, mean_returns, cov_matrix, risk_free_rate=0.02):
-    """Calculate portfolio performance metrics."""
-    portfolio_return = np.dot(weights, mean_returns)
-    portfolio_volatility = np.sqrt(weights.T @ cov_matrix @ weights)
-    sharpe_ratio = (portfolio_return - risk_free_rate) / portfolio_volatility
-    return portfolio_return, portfolio_volatility, sharpe_ratio
+def portfolio_performance(weights, mean_returns, covariance_matrix):
+    returns = np.dot(weights, mean_returns)
+    variance = np.dot(weights.T, np.dot(covariance_matrix, weights))
+    return np.sqrt(variance), returns
 
-def minimize_function(target_function, mean_returns, cov_matrix, bounds, constraints):
-    """General function for optimization."""
+def neg_sharpe_ratio(weights, mean_returns, covariance_matrix, risk_free_rate=0.02):
+    std, ret = portfolio_performance(weights, mean_returns, covariance_matrix)
+    return -(ret - risk_free_rate) / std
+
+def max_sharpe_ratio(mean_returns, covariance_matrix, risk_free_rate=0.02):
     num_assets = len(mean_returns)
+    args = (mean_returns, covariance_matrix, risk_free_rate)
+    constraints = ({'type': 'eq', 'fun': lambda x: np.sum(x) - 1})
+    bounds = [(0.0, 1.0)] * num_assets
     initial_guess = num_assets * [1. / num_assets]
-    result = minimize(target_function, initial_guess, args=(mean_returns, cov_matrix),
-                      method='SLSQP', bounds=bounds, constraints=constraints)
+    result = optimize.minimize(neg_sharpe_ratio, initial_guess, args=args, method='SLSQP', bounds=bounds, constraints=constraints)
     return result.x if result.success else None
 
-def maximize_sharpe(mean_returns, cov_matrix, risk_free_rate=0.02):
-    """Maximize Sharpe Ratio."""
-    target_function = lambda weights, mean_returns, cov_matrix: -portfolio_stats(weights, mean_returns, cov_matrix, risk_free_rate)[2]
-    bounds = [(0, 1)] * len(mean_returns)
-    constraints = [{'type': 'eq', 'fun': lambda x: np.sum(x) - 1}]
-    return minimize_function(target_function, mean_returns, cov_matrix, bounds, constraints)
+def min_volatility(mean_returns, cov_matrix):
+    num_assets = len(mean_returns)
+    constraints = ({'type': 'eq', 'fun': lambda w: np.sum(w) - 1})
+    bounds = [(0.0, 1.0)] * num_assets
+    initial_guess = np.array([1. / num_assets] * num_assets)
 
-def minimize_volatility(mean_returns, cov_matrix):
-    """Minimize portfolio volatility."""
-    target_function = lambda weights, mean_returns, cov_matrix: portfolio_stats(weights, mean_returns, cov_matrix)[1]
-    bounds = [(0, 1)] * len(mean_returns)
-    constraints = [{'type': 'eq', 'fun': lambda x: np.sum(x) - 1}]
-    return minimize_function(target_function, mean_returns, cov_matrix, bounds, constraints)
+    # Correctly pass additional arguments to the function inside lambda
+    result = optimize.minimize(lambda w, mean_returns, cov_matrix: portfolio_performance(w, mean_returns, cov_matrix)[0],
+                               initial_guess,
+                               args=(mean_returns, cov_matrix),  # passing mean_returns and cov_matrix as additional arguments
+                               method='SLSQP',
+                               bounds=bounds,
+                               constraints=constraints)
 
-# Load actual data
-data_path = 'data/sp500_1990_2000.csv.csv'
-data = pd.read_csv(data_path)
-data['DATE'] = pd.to_datetime(data['DATE'], format='%m/%d/%Y')
+    return result.x if result.success else None
 
-stock_data = data.drop(columns=['DATE'])
-
-mean_returns, cov_matrix = calculate_returns(stock_data)
-
-optimal_weights_sharpe = maximize_sharpe(mean_returns, cov_matrix)
-optimal_weights_vol = minimize_volatility(mean_returns, cov_matrix)
-
-# Output results
-print("Optimal weights for maximum Sharpe ratio:", optimal_weights_sharpe)
-print("Optimal weights for minimum volatility:", optimal_weights_vol)
