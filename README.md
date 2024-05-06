@@ -1,5 +1,4 @@
 
-```markdown
 ## Asset Portfolio Optimization for Different Type of Investors
 
 This Python project utilizes advanced portfolio optimization techniques to maximize the Sharpe ratio and minimize volatility using historical stock price data.
