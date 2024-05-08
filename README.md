@@ -1,48 +1,45 @@
-## Portfolio Optimization
 
-This Python project implements portfolio optimization techniques to maximize the Sharpe ratio and minimize volatility using historical stock price data.
+## Asset Portfolio Optimization for Different Type of Investors
+
+This Python project utilizes advanced portfolio optimization techniques to maximize the Sharpe ratio and minimize volatility using historical stock price data.
 
 ### Cloning the Repository
-To clone the repository and navigate into the project directory, use the following commands:
+Clone the repository and navigate to the project directory with the following commands:
 
 ```bash
 git clone https://github.com/AUSt-in/mean_variance_optimization.git
 cd mean_variance_optimization
 ```
-## Installation of Dependencies
 
-Before running the project, install the required Python libraries:
 
-```bash
-pip install -r requirements.txt
-```
-
-This will install libraries like `pandas`, `numpy`, and `scipy`, which are necessary for financial data analysis and optimization tasks.
 
 ## Usage
 
 ### Data Preparation
 
-First, ensure that your stock price data is in a CSV file with columns for each stock and rows for each trading day. The script expects a 'DATE' column for dates and other columns for stock tickers with their respective price data.
+Prepare your stock price data in a CSV file with a 'DATE' column and additional columns for each stock ticker, representing daily prices.
 
 ### Running the Optimization
 
-To perform portfolio optimization, run the `portfolio.py` script:
+Execute the portfolio optimization by running:
 
 ```bash
 python asset_optimization_file.py
 ```
 
-The script will read historical price data, compute daily returns, calculate mean returns and the covariance matrix of returns, and then find the optimal weights for the portfolio to either maximize the Sharpe ratio or minimize volatility.
+This script processes historical price data to compute daily returns, mean returns, covariance matrix of returns, and determines the optimal portfolio weights.
 
 ## Output
 
-The results of the portfolio optimization will be output to the console and also saved to a CSV file, `result.csv`, in the project directory. This file will contain the optimal asset weights along with performance metrics such as expected return, volatility, and the Sharpe ratio.
+The optimization results, including the optimal asset weights and key performance metrics such as expected return, volatility, and the Sharpe ratio, are displayed in the console and saved to `result.csv` in the project directory.
 
 ## Contributing
 
-Contributions to this project are welcome. Please fork the repository and submit a pull request with your enhancements.
+We encourage contributions! If you have suggestions or enhancements, please fork the repository and submit a pull request.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is open-sourced under the MIT License. For more details, see the [LICENSE](LICENSE) file.
+```
+
+This version incorporates clearer instructions and ensures consistency in the documentation format and command examples. It also emphasizes the open-source nature of the project and encourages community contributions.
